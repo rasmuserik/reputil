@@ -1,22 +1,20 @@
 #{{{1 Reputil
 #
-#{{{2 Versions and backlog
+#{{{2 Versions 
 #
-#
-#
+# - 0.0.2 `build` action which does all the usual stuff: compile, generate readme, etc.
 # - 0.0.1 
 #   - action: `genreadme` automatically generate README.md from package.json and literate coffeescript, 
 #   - action: `autocompile` autorestart `coffee -wc`
 #   - reputil own infrastructure: git-hook, npm prepublish build binary etc.
 #
-#{{{3 TODO
+#{{{2 TODO
 #
 # - package.json
 #   - call reputil from prepublish
 #   - autoinclude reputil in devDependencies
 # - bower.json
 #   - autogen as much as possible from package.json, quit if bower.json is present, but misses data
-# - action build - doing all build
 # - git commit-hook npm prepublish
 # - dist with increment version in package, tag, npm publish, bower publish 
 #
@@ -41,10 +39,12 @@ bower = undefined
 # action dispatch
 actions = {}
 
-#{{{2 hello
+#{{{2 build
 
-actions.hello = ->
-  console.log pkg
+actions.build = ->
+  actions.compile()
+  actions.genreadme()
+  actions.genbower()
 
 #{{{2 genbower
 actions.genbower = ->
@@ -103,6 +103,14 @@ actions.autocompile = ->
     child.stderr.pipe process.stderr
     child.on "exit", spawnChild
   spawnChild()
+
+
+#{{{2 compile
+#
+actions.compile = ->
+  child = child_process.exec "coffee -c #{sourceFiles.join " "}"
+  child.stdout.pipe process.stdout
+  child.stderr.pipe process.stderr
 
 
 #{{{2 main dispatch

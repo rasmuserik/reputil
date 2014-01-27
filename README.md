@@ -54,11 +54,13 @@ action dispatch
     actions = {}
     
 
-## hello
+## build
 
     
-    actions.hello = ->
-      console.log pkg
+    actions.build = ->
+      actions.compile()
+      actions.genreadme()
+      actions.genbower()
     
 
 ## genbower
@@ -123,6 +125,16 @@ When using vim, `coffee -wc` sometimes exit when new version is saved (due to vi
         child.stderr.pipe process.stderr
         child.on "exit", spawnChild
       spawnChild()
+    
+    
+
+## compile
+
+
+    actions.compile = ->
+      child = child_process.exec "coffee -c #{sourceFiles.join " "}"
+      child.stdout.pipe process.stdout
+      child.stderr.pipe process.stderr
     
     
 

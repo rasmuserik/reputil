@@ -1,6 +1,6 @@
 {
   "name": "reputil",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "prepublish": "coffee reputil.coffee genreadme; coffee -c reputil.coffee; sed -i '1i#!/usr/bin/env node' reputil.js; chmod +x reputil.js",
     "test": "echo test ok"
