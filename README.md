@@ -124,7 +124,7 @@ When using vim, `coffee -wc` sometimes exit when new version is saved (due to vi
         child = child_process.exec cmd
         child.stdout.pipe process.stdout
         child.stderr.pipe process.stderr
-        child.on "exit", spawnChild fname
+        child.on "exit", -> spawnChild fname
       spawnChild fname for fname in sourceFiles
     
     

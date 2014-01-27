@@ -2,7 +2,7 @@
   "name": "reputil",
   "version": "0.0.3",
   "scripts": {
-    "prepublish": "./reputil.coffee build",
+    "prepublish": "./reputil.coffee build; sed -i \"1i#!/usr/bin/env node\" reputil.js; chmod 755 reputil.js",
     "test": "echo test ok"
   },
   "devDependencies": {
@@ -12,7 +12,7 @@
     "glob": "~3.2.8"
   },
   "bin": {
-    "reputil": "./reputil.coffee"
+    "reputil": "./reputil.js"
   },
   "description": "Various utilities for working with repositories containing coffeescript",
   "keywords": [],
