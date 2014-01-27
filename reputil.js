@@ -92,11 +92,13 @@
   actions.autocompile = function() {
     var fname, spawnChild, _i, _len, _results;
     spawnChild = function(fname) {
-      var child;
-      child = child_process.exec("coffee -wc " + fname);
+      var child, cmd;
+      cmd = "coffee -wc " + fname;
+      console.log(cmd);
+      child = child_process.exec(cmd);
       child.stdout.pipe(process.stdout);
       child.stderr.pipe(process.stderr);
-      return child.on("exit", spawnChild(fname));
+      return child.on("exit", spawnChild);
     };
     _results = [];
     for (_i = 0, _len = sourceFiles.length; _i < _len; _i++) {

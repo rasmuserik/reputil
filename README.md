@@ -1,11 +1,11 @@
-# reputil 0.0.2
+# reputil 0.0.3
 
 Various utilities for working with repositories containing coffeescript
 # Reputil
 
 ## Versions
 
-- 0.0.3 fix autocompile for multible files, ie. one coffee per file, and restart if dead
+- 0.0.3 Fix autocompile for multiple files. Make `reputil.coffee` the executable.
 - 0.0.2 `build` action which does all the usual stuff: compile, generate readme, etc.
 - 0.0.1 
   - action: `genreadme` automatically generate README.md from package.json and literate coffeescript, 
@@ -119,10 +119,12 @@ When using vim, `coffee -wc` sometimes exit when new version is saved (due to vi
 
     actions.autocompile = ->
       spawnChild = (fname) ->
-        child = child_process.exec "coffee -wc #{fname}"
+        cmd = "coffee -wc #{fname}"
+        console.log cmd
+        child = child_process.exec cmd
         child.stdout.pipe process.stdout
         child.stderr.pipe process.stderr
-        child.on "exit", spawnChild fname
+        child.on "exit", spawnChild
       spawnChild fname for fname in sourceFiles
     
     
