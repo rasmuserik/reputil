@@ -3,6 +3,7 @@
 #
 #{{{2 Versions 
 #
+# - 0.0.4 Autocompile bugfix, and revert 0.0.3 such that reputil.js is the executable (ci where coffee isn't necessarily installed)
 # - 0.0.3 Fix autocompile for multiple files. Make `reputil.coffee` the executable.
 # - 0.0.2 `build` action which does all the usual stuff: compile, generate readme, etc.
 # - 0.0.1 
@@ -100,7 +101,7 @@ actions.genreadme = ->
 #
 actions.autocompile = ->
   spawnChild = (fname) ->
-    cmd = "coffee -wc #{fname}"
+    cmd = "#{__dirname}/node_modules/.bin/coffee -wc #{fname}"
     console.log cmd
     child = child_process.exec cmd
     child.stdout.pipe process.stdout
@@ -112,7 +113,7 @@ actions.autocompile = ->
 #{{{2 compile
 #
 actions.compile = ->
-  child = child_process.exec "coffee -c #{sourceFiles.join " "}"
+  child = child_process.exec "#{__dirname}/node_modules/.bin/coffee -c #{sourceFiles.join " "}"
   child.stdout.pipe process.stdout
   child.stderr.pipe process.stderr
 
