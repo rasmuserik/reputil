@@ -98,7 +98,7 @@
       child = child_process.exec(cmd);
       child.stdout.pipe(process.stdout);
       child.stderr.pipe(process.stderr);
-      return child.on("exit", spawnChild);
+      return child.on("exit", spawnChild(fname));
     };
     _results = [];
     for (_i = 0, _len = sourceFiles.length; _i < _len; _i++) {
