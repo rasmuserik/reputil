@@ -105,7 +105,7 @@ actions.autocompile = ->
     child = child_process.exec cmd
     child.stdout.pipe process.stdout
     child.stderr.pipe process.stderr
-    child.on "exit", spawnChild
+    child.on "exit", spawnChild fname
   spawnChild fname for fname in sourceFiles
 
 
