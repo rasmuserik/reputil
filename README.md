@@ -1,25 +1,24 @@
-# reputil 0.0.1
+# reputil 0.0.2
 
-Various utilities for working with repositories
+Various utilities for working with repositories containing coffeescript
 # Reputil
 
-## Versions and backlog
+## Versions
 
-
-
+- 0.0.3 fix autocompile for multible files, ie. one coffee per file, and restart if dead
+- 0.0.2 `build` action which does all the usual stuff: compile, generate readme, etc.
 - 0.0.1 
   - action: `genreadme` automatically generate README.md from package.json and literate coffeescript, 
   - action: `autocompile` autorestart `coffee -wc`
   - reputil own infrastructure: git-hook, npm prepublish build binary etc.
 
-### TODO
+## TODO
 
 - package.json
   - call reputil from prepublish
   - autoinclude reputil in devDependencies
 - bower.json
   - autogen as much as possible from package.json, quit if bower.json is present, but misses data
-- action build - doing all build
 - git commit-hook npm prepublish
 - dist with increment version in package, tag, npm publish, bower publish 
 
@@ -119,12 +118,12 @@ When using vim, `coffee -wc` sometimes exit when new version is saved (due to vi
 
 
     actions.autocompile = ->
-      spawnChild = ->
-        child = child_process.exec "coffee -wc #{sourceFiles.join " "}"
+      spawnChild = (fname) ->
+        child = child_process.exec "coffee -wc #{fname}"
         child.stdout.pipe process.stdout
         child.stderr.pipe process.stderr
-        child.on "exit", spawnChild
-      spawnChild()
+        child.on "exit", spawnChild fname
+      spawnChild fname for fname in sourceFiles
     
     
 

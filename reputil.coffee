@@ -1,7 +1,9 @@
+#!/usr/bin/env coffee
 #{{{1 Reputil
 #
 #{{{2 Versions 
 #
+# - 0.0.3 Fix autocompile for multiple files. Make `reputil.coffee` the executable.
 # - 0.0.2 `build` action which does all the usual stuff: compile, generate readme, etc.
 # - 0.0.1 
 #   - action: `genreadme` automatically generate README.md from package.json and literate coffeescript, 
@@ -97,12 +99,14 @@ actions.genreadme = ->
 # When using vim, `coffee -wc` sometimes exit when new version is saved (due to vims way of saving). This action keeps running `coffee -wc` on the files in the directory.
 #
 actions.autocompile = ->
-  spawnChild = ->
-    child = child_process.exec "coffee -wc #{sourceFiles.join " "}"
+  spawnChild = (fname) ->
+    cmd = "coffee -wc #{fname}"
+    console.log cmd
+    child = child_process.exec cmd
     child.stdout.pipe process.stdout
     child.stderr.pipe process.stderr
     child.on "exit", spawnChild
-  spawnChild()
+  spawnChild fname for fname in sourceFiles
 
 
 #{{{2 compile

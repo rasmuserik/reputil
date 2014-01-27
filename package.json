@@ -1,8 +1,8 @@
 {
   "name": "reputil",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "scripts": {
-    "prepublish": "coffee reputil.coffee genreadme; coffee -c reputil.coffee; sed -i '1i#!/usr/bin/env node' reputil.js; chmod +x reputil.js",
+    "prepublish": "./reputil.coffee build",
     "test": "echo test ok"
   },
   "devDependencies": {
@@ -12,9 +12,9 @@
     "glob": "~3.2.8"
   },
   "bin": {
-    "reputil": "./reputil.js"
+    "reputil": "./reputil.coffee"
   },
-  "description": "Various utilities for working with repositories",
+  "description": "Various utilities for working with repositories containing coffeescript",
   "keywords": [],
   "author": "Rasmus Erik Voel Jensen (solsort.com)",
   "main": "reputil.js",

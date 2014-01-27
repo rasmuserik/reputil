@@ -90,15 +90,20 @@
   };
 
   actions.autocompile = function() {
-    var spawnChild;
-    spawnChild = function() {
+    var fname, spawnChild, _i, _len, _results;
+    spawnChild = function(fname) {
       var child;
-      child = child_process.exec("coffee -wc " + (sourceFiles.join(" ")));
+      child = child_process.exec("coffee -wc " + fname);
       child.stdout.pipe(process.stdout);
       child.stderr.pipe(process.stderr);
-      return child.on("exit", spawnChild);
+      return child.on("exit", spawnChild(fname));
     };
-    return spawnChild();
+    _results = [];
+    for (_i = 0, _len = sourceFiles.length; _i < _len; _i++) {
+      fname = sourceFiles[_i];
+      _results.push(spawnChild(fname));
+    }
+    return _results;
   };
 
   actions.compile = function() {
