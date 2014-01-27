@@ -3,7 +3,7 @@
 #
 #{{{2 Versions 
 #
-# - 0.0.4 Autocompile bugfix, and revert 0.0.3 such that reputil.js is the executable (ci where coffee isn't necessarily installed)
+# - 0.0.4 Making it work without coffee installed (ie. on ci-servers). Autocompile bugfix.
 # - 0.0.3 Fix autocompile for multiple files. Make `reputil.coffee` the executable.
 # - 0.0.2 `build` action which does all the usual stuff: compile, generate readme, etc.
 # - 0.0.1 
