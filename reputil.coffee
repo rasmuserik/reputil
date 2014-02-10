@@ -51,8 +51,13 @@ actions.build = ->
 
 #{{{2 genbower
 actions.genbower = ->
-  bower.name ?= pkg.name
+  bower.name = pkg.name
   bower.version = pkg.version
+  bower.description = pkg.description
+  bower.license = pkg.license
+  bower.keywords = pkg.keywords
+  bower.authors = pkg.author
+  bower.repository = pkg.repository
   fs.writeFileSync "bower.json", JSON.stringify(bower, null, 2) + "\n"
 
 #{{{2 genreadme
@@ -65,11 +70,12 @@ actions.genreadme = ->
     process.exit 1
 
   readme += pkg.description || ""
+  readme += "\n"
 
   if fs.existsSync ".travis.yml"
-    readme += "![ci](https://secure.travis-ci.org/#{reposPath}.png)\n"
+    readme += "[![ci](https://secure.travis-ci.org/#{reposPath}.png)](http://travis-ci.org/#{reposPath})\n\n"
   if pkg.testling
-    readme += "![browser support](https://ci.testling.com/#{reposPath}.png)\n"
+    readme += "[![browser support](https://ci.testling.com/#{reposPath}.png)](http://ci.testling.com/#{reposPath})\n\n"
 
   for line in source.split("\n")
     continue if line.trim() in ["#!/usr/bin/env coffee"]

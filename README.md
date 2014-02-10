@@ -1,11 +1,12 @@
-# reputil 0.0.3
+# reputil 0.0.4
 
 Various utilities for working with repositories containing coffeescript
+
 # Reputil
 
 ## Versions
 
-- 0.0.4 Autocompile bugfix, and revert 0.0.3 such that reputil.js is the executable (ci where coffee isn't necessarily installed)
+- 0.0.4 Making it work without coffee installed (ie. on ci-servers). Autocompile bugfix.
 - 0.0.3 Fix autocompile for multiple files. Make `reputil.coffee` the executable.
 - 0.0.2 `build` action which does all the usual stuff: compile, generate readme, etc.
 - 0.0.1 
@@ -82,11 +83,12 @@ action dispatch
         process.exit 1
     
       readme += pkg.description || ""
+      readme += "\n"
     
       if fs.existsSync ".travis.yml"
-        readme += "![ci](https://secure.travis-ci.org/#{reposPath}.png)\n"
+        readme += "[![ci](https://secure.travis-ci.org/#{reposPath}.png)](http://travis-ci.org/#{reposPath})\n\n"
       if pkg.testling
-        readme += "![browser support](https://ci.testling.com/#{reposPath}.png)\n"
+        readme += "[![browser support](https://ci.testling.com/#{reposPath}.png)](http://ci.testling.com/#{reposPath})\n\n"
     
       for line in source.split("\n")
         continue if line.trim() in ["#!/usr/bin/env coffee"]
