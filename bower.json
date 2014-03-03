@@ -1,4 +1,11 @@
 {
   "name": "reputil",
-  "version": "0.0.4"
+  "version": "0.0.5",
+  "description": "Various utilities for working with repositories containing coffeescript",
+  "keywords": [],
+  "authors": "Rasmus Erik Voel Jensen (solsort.com)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rasmuserik/reputil.git"
+  }
 }
