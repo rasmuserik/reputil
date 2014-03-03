@@ -1,6 +1,6 @@
 {
   "name": "reputil",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Various utilities for working with repositories containing coffeescript",
   "keywords": [],
   "authors": "Rasmus Erik Voel Jensen (solsort.com)",
