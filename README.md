@@ -1,4 +1,4 @@
-# reputil 0.0.5
+# reputil 0.0.6
 
 Various utilities for working with repositories containing coffeescript
 
