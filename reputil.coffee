@@ -87,6 +87,7 @@ actions.genconfigxml = ->
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="android-minSdkVersion" value="#{pkg.phonegap.androidVersion || 10}" />
     <preference name="android-installLocation" value="auto" />
+    <preference name="permissions" value="#{pkg.phonegap.permissions || "none"}"/>
     #{("    <gap:plugin name=\"#{plugin}\" />" for plugin in pkg.phonegap.plugins || []).join "\n"}
     <icon src="icon.png" />
     #{if pkg.phonegap.splash then '<gap:splash src="splash.png" />' else ""}
