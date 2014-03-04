@@ -1,0 +1,3 @@
+name: reputil
+desc: Hack to quickly make apps using a single coffeescript source
+tags: [build, phonegap, coffeescript]

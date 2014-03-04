@@ -14,12 +14,19 @@
   "bin": {
     "reputil": "./reputil.sh"
   },
-  "description": "Various utilities for working with repositories containing coffeescript",
-  "keywords": [],
+  "description": "Hack to quickly make apps using a single coffeescript source",
+  "keywords": [
+    "build",
+    "phonegap",
+    "coffeescript"
+  ],
   "author": "Rasmus Erik Voel Jensen (solsort.com)",
   "main": "reputil.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/rasmuserik/reputil.git"
-  }
+  },
+  "authors": [
+    "Rasmus Erik Voel Jensen (solsort.com)"
+  ]
 }
