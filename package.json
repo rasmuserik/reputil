@@ -1,15 +1,15 @@
 {
   "name": "reputil",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "scripts": {
     "prepublish": "./reputil.coffee build; sed -i \"1i#!/usr/bin/env node\" reputil.js; chmod 755 reputil.js",
     "test": "echo test ok"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "dependencies": {
     "coffee-script": "~1.6.3",
-    "glob": "~3.2.8"
+    "glob": "~3.2.8",
+    "js-yaml": "~3.0.2"
   },
   "bin": {
     "reputil": "./reputil.sh"
