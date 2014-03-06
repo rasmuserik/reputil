@@ -83,7 +83,7 @@ actions = {}
 #{{{2 util
 deepExtend = (target, src) ->
   return if !src
-  for key, val in src
+  for key, val of src
     if typeof val == "object" && typeof target[key] == "object"
       deepExtend target[key], val
     else
@@ -227,7 +227,7 @@ actions.gencoffee = ->
   \# {\{{1 Boilerplate
   \# predicates that can be optimised away by uglifyjs
   if typeof isNodeJs == "undefined" or typeof runTest == "undefined" then do ->
-    root = if typeof global == "undefined" then window else global
+    root = if typeof window == "undefined" then global else window
     root.isNodeJs = (typeof window == "undefined") if typeof isNodeJs == "undefined"
     root.isPhoneGap = typeof document.ondeviceready != "undefined" if typeof isPhoneGap == "undefined"
     root.runTest = true if typeof runTest == "undefined"

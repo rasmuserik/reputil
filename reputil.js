@@ -17,13 +17,13 @@
   actions = {};
 
   deepExtend = function(target, src) {
-    var key, val, _i, _len, _results;
+    var key, val, _results;
     if (!src) {
       return;
     }
     _results = [];
-    for (val = _i = 0, _len = src.length; _i < _len; val = ++_i) {
-      key = src[val];
+    for (key in src) {
+      val = src[key];
       if (typeof val === "object" && typeof target[key] === "object") {
         _results.push(deepExtend(target[key], val));
       } else {
@@ -144,7 +144,7 @@
     if (fs.existsSync(cfg.src)) {
       return;
     }
-    return fs.writeFileSync(cfg.src, "\# {\{{1 Boilerplate\n\# predicates that can be optimised away by uglifyjs\nif typeof isNodeJs == \"undefined\" or typeof runTest == \"undefined\" then do ->\n  root = if typeof global == \"undefined\" then window else global\n  root.isNodeJs = (typeof window == \"undefined\") if typeof isNodeJs == \"undefined\"\n  root.isPhoneGap = typeof document.ondeviceready != \"undefined\" if typeof isPhoneGap == \"undefined\"\n  root.runTest = true if typeof runTest == \"undefined\"\n\# use - require/window.global with non-require name to avoid being processed in firefox plugins\nuse = if isNodeJs then ((module) -> require module) else ((module) -> window[module]) \n\# execute main\nonReady = (fn) ->\n  if isNodeJs\n    process.nextTick fn\n  else\n    if document.readystate != \"complete\" then fn() else setTimeout (-> onReady fn), 17 \n\# {\{{1 Actual code\n\nonReady ->\n  console.log \"HERE\"\n\n");
+    return fs.writeFileSync(cfg.src, "\# {\{{1 Boilerplate\n\# predicates that can be optimised away by uglifyjs\nif typeof isNodeJs == \"undefined\" or typeof runTest == \"undefined\" then do ->\n  root = if typeof window == \"undefined\" then global else window\n  root.isNodeJs = (typeof window == \"undefined\") if typeof isNodeJs == \"undefined\"\n  root.isPhoneGap = typeof document.ondeviceready != \"undefined\" if typeof isPhoneGap == \"undefined\"\n  root.runTest = true if typeof runTest == \"undefined\"\n\# use - require/window.global with non-require name to avoid being processed in firefox plugins\nuse = if isNodeJs then ((module) -> require module) else ((module) -> window[module]) \n\# execute main\nonReady = (fn) ->\n  if isNodeJs\n    process.nextTick fn\n  else\n    if document.readystate != \"complete\" then fn() else setTimeout (-> onReady fn), 17 \n\# {\{{1 Actual code\n\nonReady ->\n  console.log \"HERE\"\n\n");
   };
 
   actions.genreadme = function() {
