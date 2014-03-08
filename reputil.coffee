@@ -230,7 +230,7 @@ actions.gencoffee = ->
     root = if typeof window == "undefined" then global else window
     root.isNodeJs = (typeof process != "undefined") if typeof isNodeJs == "undefined"
     root.isWindow = (typeof window != "undefined") if typeof isWindow == "undefined"
-    root.isPhoneGap = typeof document.ondeviceready != "undefined" if typeof isPhoneGap == "undefined"
+    root.isPhoneGap = typeof document?.ondeviceready != "undefined" if typeof isPhoneGap == "undefined"
     root.runTest = true if typeof runTest == "undefined"
   \# use - require/window.global with non-require name to avoid being processed in firefox plugins
   use = if isNodeJs then ((module) -> require module) else ((module) -> window[module]) 
