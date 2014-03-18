@@ -83,7 +83,7 @@ actions = {}
 #{{{2 util
 deepExtend = (target, src) ->
   return if !src
-  for key, val in src
+  for key, val of src
     if typeof val == "object" && typeof target[key] == "object"
       deepExtend target[key], val
     else
@@ -252,17 +252,17 @@ actions.gencoffee = ->
   \# {\{{1 Boilerplate
   \# predicates that can be optimised away by uglifyjs
   if typeof isNodeJs == "undefined" or typeof runTest == "undefined" then do ->
-    root = if typeof global == "undefined" then window else global
-    root.isNodeJs = (typeof window == "undefined") if typeof isNodeJs == "undefined"
-    root.isPhoneGap = typeof document.ondeviceready != "undefined" if typeof isPhoneGap == "undefined"
-    root.runTest = true if typeof runTest == "undefined"
+    root = if typeof window == "undefined" then global else window
+    root.isNodeJs = (typeof process != "undefined") if typeof isNodeJs == "undefined"
+    root.isWindow = (typeof window != "undefined") if typeof isWindow == "undefined"
+    root.isPhoneGap = typeof document?.ondeviceready != "undefined" if typeof isPhoneGap == "undefined"
+    root.runTest = (if isNodeJs then process.argv[2] == "test" else location.hash.slice(1) == "test") if typeof runTest == "undefined"
+
   \# use - require/window.global with non-require name to avoid being processed in firefox plugins
   use = if isNodeJs then ((module) -> require module) else ((module) -> window[module]) 
   \# execute main
   onReady = (fn) ->
-    if isNodeJs
-      process.nextTick fn
-    else
+    if isWindow
       if document.readystate != "complete" then fn() else setTimeout (-> onReady fn), 17 
   \# {\{{1 Actual code
 
