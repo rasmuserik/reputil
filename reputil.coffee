@@ -89,6 +89,13 @@ deepExtend = (target, src) ->
     else
       target[key] = val
 
+exec = (cmd, fn) ->
+  console.log "> #{cmd}"
+  child = child_process.exec cmd
+  child.stdout.pipe process.stdout
+  child.stderr.pipe process.stderr
+  child.on "exit", (result) -> fn?(result)
+
 #{{{2 build
 actions.build = ->
   actions.compile()
@@ -104,6 +111,7 @@ actions.genpackage = ->
     pkg = "{}"
   pkg = JSON.parse pkg
   pkg.version ?= "0.0.0"
+  pkg.version = cfg.version if cfg.version
   pkg.name = cfg.name
   pkg.description = cfg.desc
   pkg.license = cfg.license
@@ -166,9 +174,26 @@ actions.genconfigxml = ->
 </widget>\n"""
 
 #{{{2 genhtml
-actions.genhtml= ->
+actions.genhtml = ->
   return if !cfg.html
   viewport = cfg.html.viewport || "width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"
+  css = cfg.html.css || []
+  js = cfg.html.js || []
+  fnames = []
+
+  for module, _ of bower.dependencies || {}
+    if !(module in (cfg.html.exclude || []))
+      moduleMain = (JSON.parse fs.readFileSync "bower_components/#{module}/bower.json").main
+      moduleMain = [moduleMain] if !Array.isArray moduleMain
+      for file in moduleMain
+        fname = "bower_components/#{module}/#{file}"
+        css.push fname if file.match /\.css$/
+        js.push fname if file.match /\.js$/
+        fnames.push fname
+  exec "git add -f #{fnames.join " "}"
+
+  js.push cfg.src.replace /.coffee$/, ".js"
+
   fs.writeFileSync "index.html", """
     <!DOCTYPE html>
     <html>
@@ -185,11 +210,11 @@ actions.genhtml= ->
         <link rel="apple-touch-icon-precomposed" href="icon.png">
         <link rel="icon" type="image/png" href="icon.png">
         <link rel="shortcut icon" href="icon.png">
-        \ #{("<link rel=\"stylesheet\" href=\"#{src}\">" for src in (cfg.html.css || [])).join "\n    "}
+        \ #{("<link rel=\"stylesheet\" href=\"#{src}\">" for src in css).join "\n    "}
       </head>
       <body>
        \ #{cfg.html.body || ""}
-       \ #{("<script src=\"#{src}\"></script>" for src in (cfg.html.js || []).concat [cfg.src.replace /.coffee$/, ".js"]).join "\n    "}
+       \ #{("<script src=\"#{src}\"></script>" for src in js).join "\n    "}
       </body>
     </html>\n"""
 
@@ -314,6 +339,7 @@ if !actions[process.argv[2]]
 try
   cfg = (require "js-yaml").safeLoad fs.readFileSync "about.yml", "utf-8"
 catch e
+  console.log e
   console.log "Could not find/read/parse \"about.yml\" in current directory."
   process.exit 1
 throw "about.yml missing name" if !cfg.name
