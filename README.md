@@ -1,4 +1,4 @@
-# reputil 0.1.4
+# reputil 0.1.5
 
 Hack to quickly make apps using a single coffeescript source
 
@@ -144,7 +144,6 @@ action dispatch
 ## genbower
 
     actions.genbower = ->
-      return if !cfg.bower
       try
         bower = JSON.parse fs.readFileSync "bower.json"
       catch e
