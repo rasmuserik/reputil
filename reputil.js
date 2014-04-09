@@ -83,9 +83,6 @@
 
   actions.genbower = function() {
     var e;
-    if (!cfg.bower) {
-      return;
-    }
     try {
       bower = JSON.parse(fs.readFileSync("bower.json"));
     } catch (_error) {

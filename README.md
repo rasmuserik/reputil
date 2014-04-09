@@ -144,7 +144,6 @@ action dispatch
 ## genbower
 
     actions.genbower = ->
-      return if !cfg.bower
       try
         bower = JSON.parse fs.readFileSync "bower.json"
       catch e
