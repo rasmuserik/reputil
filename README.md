@@ -1,4 +1,4 @@
-# reputil 0.1.5
+# reputil 0.1.6
 
 Hack to quickly make apps using a single coffeescript source
 
