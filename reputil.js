@@ -181,6 +181,9 @@
         }
       }
     }
+    if (cfg.files) {
+      fname = fname.concat(cfg.files);
+    }
     exec("git add -f " + (fnames.join(" ")));
     js.push(cfg.src.replace(/.coffee$/, ".js"));
     fnames.push(cfg.src.replace(/.coffee$/, ".js"));

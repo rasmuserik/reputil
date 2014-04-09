@@ -1,4 +1,4 @@
-# reputil 0.1.4
+# reputil 0.1.5
 
 Hack to quickly make apps using a single coffeescript source
 
@@ -244,6 +244,7 @@ action dispatch
             css.push fname if file.match /\.css$/
             js.push fname if file.match /\.js$/
             fnames.push fname
+      fname = fname.concat cfg.files if cfg.files
       exec "git add -f #{fnames.join " "}"
     
       js.push cfg.src.replace /.coffee$/, ".js"
